@@ -17,7 +17,7 @@ from Discriminator import Discriminator as Dis
 # Define DCGAN class (in DCGAN.py)
 from Gan import Gan
 # Define Helper class (in Helpers.py)
-from Helpers import print_images, show_starting_img
+from Helpers import show_starting_img
 
 # Set random seed for reproducibility
 manualSeed = random.randint(1, 10000)
@@ -118,8 +118,7 @@ def run(num_workers, batch_size, num_epochs, lr):
     optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
     optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
 
-    fake_imgs = gan.train(real_label, fake_label, criterion, optimizerD, optimizerG, fixed_noise)
-    print_images(dataloader, fake_imgs)
+    gan.train(real_label, fake_label, criterion, optimizerD, optimizerG, fixed_noise)
 
 
 if __name__ == '__main__':

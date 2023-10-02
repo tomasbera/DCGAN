@@ -3,7 +3,7 @@ import torchvision.utils as vutils
 import numpy as np
 
 
-def print_images(dataloader, img_list):
+def print_images(dataloader, img_list, device):
     real_batch = next(iter(dataloader))
 
     # Plot the real images

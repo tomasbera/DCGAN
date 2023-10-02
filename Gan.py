@@ -1,6 +1,7 @@
 import torchvision.utils as vutils
 import torch.nn as nn
 import torch
+from Helpers import print_images
 
 
 class Gan(nn.Module):
@@ -25,6 +26,8 @@ class Gan(nn.Module):
         print("Starting Training Loop...")
         # For each epoch
         for epoch in range(self.num_epochs):
+            print(epoch)
+            print(self.num_epochs)
             # For each batch in the dataloader
             for i, data in enumerate(self.dataloader, 0):
                 ############################
@@ -92,4 +95,5 @@ class Gan(nn.Module):
                     img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
                 iters += 1
 
-                return img_list
+            # prints out the current fake and real images, created by G and defined be D
+            print_images(dataloader, fake_imgs, device)
