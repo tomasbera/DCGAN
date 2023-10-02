@@ -87,7 +87,7 @@ def run(num_workers, batch_size, num_epochs, lr):
 
     netG = Gen(gpu_count, nz, ngf, nc).to(device)
     netD = Dis(gpu_count, nc, ndf).to(device)
-    gan = Gan().to(device)
+    gan = Gan(num_epochs, dataloader, netD, netG, device, nz, nc).to(device)
 
     if (device.type == 'cuda') and (gpu_count > 1):
         netG = nn.DataParallel(netG, list(range(gpu_count)))
@@ -111,8 +111,7 @@ def run(num_workers, batch_size, num_epochs, lr):
     optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
     optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
 
-    gan.train(num_epochs, dataloader, netD, netG, device, real_label, fake_label,
-              criterion, nz, nc, optimizerD, optimizerG, fixed_noise)
+    gan.train(real_label, fake_label, criterion, optimizerD, optimizerG, fixed_noise)
 
 
 if __name__ == '__main__':
