@@ -4,9 +4,9 @@ import torch
 from Helpers import print_images
 
 
-class Gan(nn.Module):
+class DCGAN(nn.Module):
     def __init__(self, num_epochs, dataloader, netD, netG, device, nz, nc):
-        super(Gan, self).__init__()
+        super(DCGAN, self).__init__()
 
         self.num_epochs = num_epochs
         self.dataloader = dataloader

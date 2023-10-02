@@ -15,7 +15,7 @@ from Generator import Generator as Gen
 # Define Discriminator class (in Discriminator.py)
 from Discriminator import Discriminator as Dis
 # Define DCGAN class (in DCGAN.py)
-from Gan import Gan
+from DCGan import DCGAN as dcgan
 # Define Helper class (in Helpers.py)
 from Helpers import show_starting_img
 
@@ -94,7 +94,7 @@ def run(num_workers, batch_size, num_epochs, lr):
 
     netG = Gen(gpu_count, nz, ngf, nc).to(device)
     netD = Dis(gpu_count, nc, ndf).to(device)
-    gan = Gan(num_epochs, dataloader, netD, netG, device, nz, nc).to(device)
+    gan = dcgan(num_epochs, dataloader, netD, netG, device, nz, nc).to(device)
 
     if (device.type == 'cuda') and (gpu_count > 1):
         netG = nn.DataParallel(netG, list(range(gpu_count)))
