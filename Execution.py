@@ -28,12 +28,12 @@ torch.manual_seed(manualSeed)
 torch.use_deterministic_algorithms(True)
 
 
-def data_loader(workers, batch_size, image_size):
+def data_loader(workers, batch_size, image_size, ngpu):
     # datasett with pictures used for this project.
     # https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg?resourcekey=0-rJlzl934LzC-Xp28GeIBzQ
 
     ds_root = "./datasets"
-    extract_path = f'{ds_root}/celeba-dataset'  # Add this line
+    extract_path = f'{ds_root}/celeba-dataset'
 
     # If dateset isn't in the directory its downloaded from the zipfile
     if not os.path.isdir(extract_path):
@@ -112,8 +112,8 @@ def run(num_workers, batch_size, num_epochs, lr):
         print("CUDA is not available on this system.")
 
     # Set device
-    dataloader, device = data_loader(num_workers, batch_size, image_size)
     gpu_count = torch.cuda.device_count()
+    dataloader, device = data_loader(num_workers, batch_size, image_size, gpu_count)
 
     netG = Gen(gpu_count, nz, ngf, nc).to(device)
     netD = Dis(gpu_count, nc, ndf).to(device)

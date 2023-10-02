@@ -26,8 +26,6 @@ class DCGAN(nn.Module):
         print("Starting Training Loop...")
         # For each epoch
         for epoch in range(self.num_epochs):
-            print(epoch)
-            print(self.num_epochs)
             # For each batch in the dataloader
             for i, data in enumerate(self.dataloader, 0):
                 ############################
