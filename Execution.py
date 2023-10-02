@@ -67,11 +67,23 @@ def weights_init(m):
 
 
 def run(num_workers, batch_size, num_epochs, lr):
+    # Size of training images
     image_size = 64
+
+    # number of channels, R G B
     nc = 3
+
+    # size of generator input
     nz = 100
+
+    # size of feature maps in generator
     ngf = 64
+
+    # size of feature maps in discriminator
+    # should be 0,5
     ndf = 64
+
+    # hyperparameter for Adam optimizer
     beta1 = 0.5
 
     # Check if CUDA (GPU support) is available
