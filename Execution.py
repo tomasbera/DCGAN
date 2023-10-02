@@ -9,6 +9,8 @@ import torch.optim as optim
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
+import zipfile
+from tqdm import tqdm
 
 # Define Generator class (in Generator.py)
 from Generator import Generator as Gen
@@ -28,13 +30,30 @@ torch.use_deterministic_algorithms(True)
 
 def data_loader(workers, batch_size, image_size):
     # datasett with pictures used for this project.
-    # TODO: find a way so it doesn't need to be downloaded manually
     # https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg?resourcekey=0-rJlzl934LzC-Xp28GeIBzQ
 
     ds_root = "./datasets"
-    dataroot = f'{ds_root}/celeba-dataset'
+    extract_path = f'{ds_root}/celeba-dataset'  # Add this line
 
-    dataset = dset.ImageFolder(root=dataroot,
+    # If dateset isn't in the directory its downloaded from the zipfile
+    if not os.path.isdir(extract_path):
+        # Specify the path to the manually uploaded dataset zip file
+        zip_file_path = f'{ds_root}/img_align_celeba.zip'
+
+        # Get the total number of files in the zip archive
+        with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            total_files = len(zip_ref.namelist())
+
+        # Create a progress bar using tqdm
+        pbar = tqdm(total=total_files, desc='Extracting files')
+        # Extract each file and update the progress bar
+        with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            for file in zip_ref.namelist():
+                zip_ref.extract(file, extract_path)
+                pbar.update(1)
+        pbar.close()
+
+    dataset = dset.ImageFolder(root=extract_path,
                                transform=transforms.Compose([
                                    transforms.Resize(image_size),
                                    transforms.CenterCrop(image_size),
