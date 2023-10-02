@@ -27,6 +27,10 @@ torch.use_deterministic_algorithms(True)
 
 
 def data_loader(workers, batch_size, image_size):
+    # datasett with pictures used for this project.
+    # TODO: find a way so it doesn't need to be downloaded manually
+    # https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg?resourcekey=0-rJlzl934LzC-Xp28GeIBzQ
+
     ds_root = "./datasets"
     dataroot = f'{ds_root}/celeba-dataset'
 
