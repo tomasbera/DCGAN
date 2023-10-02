@@ -17,7 +17,7 @@ from Discriminator import Discriminator as Dis
 # Define DCGAN class (in DCGAN.py)
 from Gan import Gan
 # Define Helper class (in Helpers.py)
-from Helpers import print_images
+from Helpers import print_images, show_starting_img
 
 # Set random seed for reproducibility
 manualSeed = random.randint(1, 10000)
@@ -45,13 +45,7 @@ def data_loader(workers, batch_size, image_size):
     device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
 
     # Plot some training images
-    real_batch = next(iter(dataloader))
-    plt.figure(figsize=(8, 8))
-    plt.axis("off")
-    plt.title("Training Images")
-    plt.imshow(
-        np.transpose(vutils.make_grid(real_batch[0].to(device)[:64], padding=2, normalize=True).cpu(), (1, 2, 0))
-    )
+    show_starting_img(dataloader, device)
 
     return dataloader, device
 

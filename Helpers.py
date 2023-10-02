@@ -21,3 +21,22 @@ def print_images(dataloader, img_list):
     plt.title("Fake Images")
     plt.imshow(np.transpose(img_list[-1], (1, 2, 0)))
     plt.show()
+
+
+def show_starting_img(dataloader, device, title="Training Images", grid_size=(8, 8)):
+
+    # Get a batch of real images
+    real_batch = next(iter(dataloader))
+
+    # Ensure grid size is within the bounds of the batch size
+    grid_size = (min(grid_size[0], real_batch[0].size(0)), grid_size[1])
+
+    # Plot the images
+    plt.figure(figsize=(10, 10))
+    plt.axis("off")
+    plt.title(title)
+
+    # Display a grid of images
+    image_grid = vutils.make_grid(real_batch[0].to(device)[:grid_size[0] * grid_size[1]], padding=2, normalize=True)
+    plt.imshow(np.transpose(image_grid.cpu(), (1, 2, 0)))
+    plt.show()
