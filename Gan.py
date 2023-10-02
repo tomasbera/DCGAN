@@ -96,4 +96,4 @@ class Gan(nn.Module):
                 iters += 1
 
             # prints out the current fake and real images, created by G and defined be D
-            print_images(dataloader, fake_imgs, device)
+            print_images(self.dataloader, img_list, self.device)
