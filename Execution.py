@@ -37,7 +37,7 @@ def data_loader(workers, batch_size, image_size):
 
     # If dateset isn't in the directory its downloaded from the zipfile
     if not os.path.isdir(extract_path):
-        # Specify the path to the manually uploaded dataset zip file
+        # Specify the path to the manually uploaded datasets zip file
         zip_file_path = f'{ds_root}/img_align_celeba.zip'
 
         # Get the total number of files in the zip archive
