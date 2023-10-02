@@ -25,7 +25,7 @@ class Discriminator(nn.Module):
             nn.BatchNorm2d(self.ngf * 8),
             nn.LeakyReLU(0.2, inplace=True),
 
-            nn.Conv2d(self.ngf * 8, 1, 4, 1, 0, bias=False),  # Corrected this line
+            nn.Conv2d(self.ngf * 8, 1, 4, 1, 0, bias=False),
             nn.Sigmoid()
         )
 
