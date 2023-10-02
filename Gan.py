@@ -2,6 +2,7 @@ import torchvision.utils as vutils
 import torch.nn as nn
 import torch
 
+
 class Gan(nn.Module):
     def __init__(self, num_epochs, dataloader, netD, netG, device, nz, nc):
         super(Gan, self).__init__()
@@ -90,3 +91,5 @@ class Gan(nn.Module):
                         fake = self.netG(fixed_noise).detach().cpu()
                     img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
                 iters += 1
+
+                return img_list

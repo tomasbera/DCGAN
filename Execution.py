@@ -16,10 +16,11 @@ from Generator import Generator as Gen
 from Discriminator import Discriminator as Dis
 # Define DCGAN class (in DCGAN.py)
 from Gan import Gan
+# Define Helper class (in Helpers.py)
+from Helpers import print_images
 
 # Set random seed for reproducibility
-manualSeed = 999
-# manualSeed = random.randint(1, 10000) # use if you want new results
+manualSeed = random.randint(1, 10000)
 random.seed(manualSeed)
 torch.manual_seed(manualSeed)
 torch.use_deterministic_algorithms(True)
@@ -111,7 +112,8 @@ def run(num_workers, batch_size, num_epochs, lr):
     optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
     optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
 
-    gan.train(real_label, fake_label, criterion, optimizerD, optimizerG, fixed_noise)
+    fake_imgs = gan.train(real_label, fake_label, criterion, optimizerD, optimizerG, fixed_noise)
+    print_images(dataloader, fake_imgs)
 
 
 if __name__ == '__main__':
