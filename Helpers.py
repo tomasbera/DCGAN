@@ -41,12 +41,13 @@ def show_starting_img(dataloader, device, title="Training Images", grid_size=(8,
     plt.show()
 
 
+# method that shows Generator and Discriminator loss during training
 def show_graph(G_losses, D_losses):
     plt.figure(figsize=(10, 5))
-    plt.title("Generator and Discriminator Loss During Training")
+    plt.title("Generator and Discriminator Loss")
     plt.plot(G_losses, label="G")
     plt.plot(D_losses, label="D")
-    plt.xlabel("iterations")
+    plt.xlabel("Iterations")
     plt.ylabel("Loss")
     plt.legend()
     plt.show()
