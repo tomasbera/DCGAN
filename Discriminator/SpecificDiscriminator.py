@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+
 class Discriminator(nn.Module):
     def __init__(self, nc, ngf, num_layers):
         super(Discriminator, self).__init__()
@@ -15,7 +16,7 @@ class Discriminator(nn.Module):
             out_channels = ngf * (2 ** i)
 
             # Convolutional layer
-            kernel_size = 3 if i == 0 else 4  # Reduced kernel size for the first layer
+            kernel_size = 3 if i == 0 else 4
             layers.append(nn.Conv2d(in_channels, out_channels, kernel_size, 2, 1, bias=False))
 
             # Batch normalization for intermediate layers
