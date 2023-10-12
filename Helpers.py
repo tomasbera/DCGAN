@@ -24,7 +24,6 @@ def print_images(dataloader, img_list, device):
 
 
 def show_starting_img(dataloader, device, title="Training Images", grid_size=(8, 8)):
-
     # Get a batch of real images
     real_batch = next(iter(dataloader))
 
@@ -39,4 +38,15 @@ def show_starting_img(dataloader, device, title="Training Images", grid_size=(8,
     # Display a grid of images
     image_grid = vutils.make_grid(real_batch[0].to(device)[:grid_size[0] * grid_size[1]], padding=2, normalize=True)
     plt.imshow(np.transpose(image_grid.cpu(), (1, 2, 0)))
+    plt.show()
+
+
+def show_graph(G_losses, D_losses):
+    plt.figure(figsize=(10, 5))
+    plt.title("Generator and Discriminator Loss During Training")
+    plt.plot(G_losses, label="G")
+    plt.plot(D_losses, label="D")
+    plt.xlabel("iterations")
+    plt.ylabel("Loss")
+    plt.legend()
     plt.show()

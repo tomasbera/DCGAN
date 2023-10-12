@@ -2,9 +2,8 @@ import torch.nn as nn
 
 
 class Generator(nn.Module):
-    def __init__(self, ngpu, nz, ngf, nc):  # Add 'nz' as an argument
+    def __init__(self, nz, ngf, nc):  # Add 'nz' as an argument
         super(Generator, self).__init__()
-        self.ngpu = ngpu
         self.nz = nz
         self.ngf = ngf
         self.nc = nc

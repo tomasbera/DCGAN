@@ -1,14 +1,10 @@
-import argparse
 import os
 import random
-import numpy as np
-import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
-import torchvision.utils as vutils
 import zipfile
 from tqdm import tqdm
 
@@ -115,8 +111,8 @@ def run(num_workers, batch_size, num_epochs, lr):
     gpu_count = torch.cuda.device_count()
     dataloader, device = data_loader(num_workers, batch_size, image_size, gpu_count)
 
-    netG = Gen(gpu_count, nz, ngf, nc).to(device)
-    netD = Dis(gpu_count, nc, ndf).to(device)
+    netG = Gen(nz, ngf, nc).to(device)
+    netD = Dis(nc, ndf).to(device)
     gan = dcgan(num_epochs, dataloader, netD, netG, device, nz, nc).to(device)
 
     if (device.type == 'cuda') and (gpu_count > 1):

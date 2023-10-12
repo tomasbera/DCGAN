@@ -2,9 +2,8 @@ import torch.nn as nn
 
 
 class Discriminator(nn.Module):
-    def __init__(self, ngpu, nc, ngf):
+    def __init__(self, nc, ngf):
         super(Discriminator, self).__init__()
-        self.ngpu = ngpu
         self.ngf = ngf
         self.nc = nc
 
