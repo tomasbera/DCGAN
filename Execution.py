@@ -10,8 +10,10 @@ from tqdm import tqdm
 
 # Define Generator class (in Generator.py)
 from Generator import Generator as Gen
-# Define Discriminator class (in Discriminator.py)
-from Discriminator import Discriminator as Dis
+# Define Discriminator class (in StandardDiscriminator.py)
+from Discriminator.StandardDiscriminator import Discriminator as stdDis
+# Define Discriminator class (in StandardDiscriminator.py)
+from Discriminator.SpecificDiscriminator import Discriminator as specDis
 # Define DCGAN class (in DCGAN.py)
 from DCGan import DCGAN as dcgan
 # Define Helper class (in Helpers.py)
@@ -79,7 +81,13 @@ def weights_init(m):
         nn.init.constant_(m.bias.data, 0)
 
 
-def run(num_workers, batch_size, num_epochs, lr):
+def run(num_workers, batch_size, num_epochs, lr, numb_layers, self_made):
+    # Self implemented number of DCGAN layers
+    numb_layers = numb_layers
+
+    # Boolean that says if the program should run Specific or Standard DCGAN
+    self_made = self_made
+
     # Size of training images
     image_size = 64
 
@@ -93,10 +101,10 @@ def run(num_workers, batch_size, num_epochs, lr):
     ngf = 64
 
     # size of feature maps in discriminator
-    # should be 0,5
     ndf = 64
 
     # hyperparameter for Adam optimizer
+    # should be 0,5
     beta1 = 0.5
 
     # Check if CUDA (GPU support) is available
@@ -111,8 +119,14 @@ def run(num_workers, batch_size, num_epochs, lr):
     gpu_count = torch.cuda.device_count()
     dataloader, device = data_loader(num_workers, batch_size, image_size, gpu_count)
 
-    netG = Gen(nz, ngf, nc).to(device)
-    netD = Dis(nc, ndf).to(device)
+    if self_made:
+        netD = specDis(nc, ndf, numb_layers).to(device)
+        netG = Gen(nz, ngf, nc).to(device)
+    else:
+        netD = stdDis(nc, ndf).to(device)
+        netG = Gen(nz, ngf, nc).to(device)
+
+    print(netD)
     gan = dcgan(num_epochs, dataloader, netD, netG, device, nz, nc).to(device)
 
     if (device.type == 'cuda') and (gpu_count > 1):
@@ -141,4 +155,4 @@ def run(num_workers, batch_size, num_epochs, lr):
 
 
 if __name__ == '__main__':
-    run(2, 128, 5, 0.001)
+    run(2, 128, 5, 0.001, 4, False)
